@@ -1,0 +1,6 @@
+node_modules
+dist
+umd
+__tmp__
+*.log
+lib_es6

@@ -1,0 +1,9 @@
+{
+  "name": "parallel-lock-js",
+  "dependencies": {
+    "node-uuid": "registry:npm/node-uuid#1.4.7+20160723033700"
+  },
+  "globalDependencies": {
+    "node": "registry:dt/node#6.0.0+20160621231320"
+  }
+}

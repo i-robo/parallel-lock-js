@@ -1,0 +1,67 @@
+{
+  "name": "parallel-lock-js",
+  "version": "0.0.3",
+  "description": "Modular ReactJS Map (use with providers)",
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "scripts": {
+    "clean": "rm -rf lib lib_es6 umd __tmp__",
+    "lint": "$(npm bin)/tslint",
+    "prepublish": "npm run clean && npm run build",
+    "serve_examples": "$(npm bin)/webpack-dev-server --config examples/webpack.config.js",
+    "watch:build_commonjs": "npm run clean && node_modules/.bin/tsc --project tsconfig_lib.json --watch",
+    "build_umd": "npm run clean && node_modules/.bin/tsc --module umd --outdir umd",
+    "build_ts_lib_es6": "$(npm bin)/typings install && $(npm bin)/tsc",
+    "lib_es6_to_lib": "$(npm bin)/babel lib_es6 -d lib && $(npm bin)/copyfiles -u 1 'lib_es6/*.d.ts' lib && $(npm bin)/copyfiles -u 1 'lib_es6/**/*.d.ts' lib",
+    "build": "npm run build_ts_lib_es6 && npm run lib_es6_to_lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-robo/parallel-lock-js"
+  },
+  "keywords": [
+    "testing",
+    "lock",
+    "promise"
+  ],
+  "author": "devdoomari@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-robo/parallel-lock-js/issues"
+  },
+  "homepage": "https://github.com/i-robo/parallel-lock-js#readme",
+  "dependencies": {
+    "lodash": "^4.9.0",
+    "node-uuid": "^1.4.7",
+    "sleep-promise": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.7.7",
+    "babel-core": "^6.3.17",
+    "babel-jest": "^10.0.1",
+    "babel-polyfill": "^6.8.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "copyfiles": "^0.2.1",
+    "jest-cli": "^12.0.2",
+    "tslint": "^3.7.4",
+    "typescript": "^1.8.10",
+    "typings": "^1.5.0"
+  },
+  "jest": {
+    "testFileExtensions": [
+      "js",
+      "jsx",
+      "es6"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "es6"
+    ],
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/src"
+    ]
+  }
+}

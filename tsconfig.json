@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noLib": false,
+    "outDir": "lib_es6",
+    "rootDir": "src"
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    "static",
+    "__tests__",
+    "lib",
+    "lib_es6",
+    "umd",
+    "mocks"
+  ]
+}
