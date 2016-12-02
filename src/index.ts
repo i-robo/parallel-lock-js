@@ -16,7 +16,7 @@ export type Task = {
   timeoutMs: number,
 };
 
-export class ParallelLock {
+export class ParallelLockRepo {
   runtimeTimeouts: {
     [key: string]: PromiseDeferType<void>,
   };
@@ -28,16 +28,20 @@ export class ParallelLock {
   maxParallels: number;
   defaultTimeoutMs: number;
 
-  constructor(options: {
+  constructor(options?: {
     maxParallels?: number,
     defaultTimeoutMs?: number,
   }) {
+    const _options = options || {
+      maxParallels: 1,
+      defaultTimeoutMs: 100000,
+    };
     this.taskQueue = new Queue<Task>();
-    this.maxParallels = options.maxParallels || 1;
+    this.maxParallels = _options.maxParallels;
     this.runtimeTimeouts = {};
     this.runtimeTimeoutErrors = {};
     this.parallelCount = 0;
-    this.defaultTimeoutMs = options.defaultTimeoutMs || 100000;
+    this.defaultTimeoutMs = _options.defaultTimeoutMs;
   }
 
   async acquireLock(options?: {
@@ -77,7 +81,7 @@ export class ParallelLock {
       });
     task.defer.resolve();
   }
-  releaseLock(task) {
+  releaseLock(task: Task) {
     // delete this.runtimeTimeouts[task.id];
     this.parallelCount--;
     if (this.parallelCount < this.maxParallels) {
@@ -86,8 +90,14 @@ export class ParallelLock {
         this.runTask(taskToRun);
       }
     }
-    this.runtimeTimeouts[task.id].resolve();
+    try {
+      this.runtimeTimeouts[task.id].resolve();
+    } catch (e) {
+      console.error(`releaseLock error: ${JSON.stringify(task)}`);
+      console.error(e);
+      throw(e);
+    }
   }
 }
 
-export default ParallelLock;
+export default ParallelLockRepo;
